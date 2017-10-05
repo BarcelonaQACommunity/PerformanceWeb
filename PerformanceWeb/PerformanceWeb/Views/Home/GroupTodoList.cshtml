@@ -3,21 +3,42 @@
 @{
     ViewData["Title"] = "ERNI List";
 }
-
 <h2>ERNI List</h2>
+<table>
+    <tbody>
+        <tr>
+            <td class="col-xs-1">
+                <nav>
+                    <ul class="nav nav-pills nav-stacked span2">
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Services</a></li>
+                        <li><a href="#">Partners</a></li>
+                        <li><a href="#">Contacts</a></li>
+                    </ul>
+                </nav>
+            </td>
+            <td class="col-xs-10">
+                <p>
+                    <a asp-action="Create">Create New</a>
+                </p>
+                @foreach (var item in Model.TodoList) {
+                    <div class="well" style="background:white">
+                        <h3>@item.Title</h3>
+                        <h4>@item.Description</h4>
+                        <div>
+                            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                        </div>
+                    </div>
+    }
+            </td>
+        </tr>
+    </tbody>
+</table>
+    
+    
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+    
 
-@foreach (var item in Model.TodoList) {
-    <div class="well" style="background:white">
-                <h3>@item.Title</h3>
-                <h4>@item.Description</h4>
-        <div>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-        </div>
-    </div>
-}
