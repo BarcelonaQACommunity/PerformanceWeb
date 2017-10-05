@@ -1,0 +1,23 @@
+﻿@model GroupTodoListModel
+
+@{
+    ViewData["Title"] = "ERNI List";
+}
+
+<h2>ERNI List</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+@foreach (var item in Model.TodoList) {
+    <div class="well" style="background:white">
+                <h3>@item.Title</h3>
+                <h4>@item.Description</h4>
+        <div>
+            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </div>
+    </div>
+}
