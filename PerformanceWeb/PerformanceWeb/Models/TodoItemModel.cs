@@ -15,7 +15,9 @@ namespace PerformanceWeb.Models
             Colors = new List<SelectListItem>
             {
                 new SelectListItem { Text = "White", Value = "white"},
-                new SelectListItem { Text = "Red", Value = "red"}
+                new SelectListItem { Text = "Red", Value = "red"},
+                new SelectListItem { Text = "Aquamarine", Value = "aquamarine"},
+                new SelectListItem { Text = "Burlywood", Value = "burlywood"}
             };
         }
 

@@ -53,6 +53,30 @@ namespace PerformanceWeb.Controllers
         }
 
         /// <summary>
+        /// Deletes the todo item.
+        /// </summary>
+        /// <param name="itemId">The item identifier.</param>
+        /// <returns></returns>
+        public ActionResult DeleteTodoItem(string itemId)
+        {
+            TodoItemModel itemToRemove = null;
+            foreach (var item in StaticData.TodoData.Groups[StaticData.TodoData.GroupToShow].TodoList)
+            {
+                if (item.Id == itemId)
+                {
+                    itemToRemove = item;
+                }
+            }
+
+            if (itemToRemove != null)
+            {
+                StaticData.TodoData.Groups[StaticData.TodoData.GroupToShow].TodoList.Remove(itemToRemove);
+            }
+
+            return View("GroupTodoList", StaticData.TodoData);
+        }
+
+        /// <summary>
         /// Shows the group.
         /// </summary>
         /// <param name="groupId">The group identifier.</param>

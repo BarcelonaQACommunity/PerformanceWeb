@@ -40,7 +40,7 @@
                         <h4 name="description">@item.Description</h4>
                         <div>
                             @Html.ActionLink("Edit", "Edit", new { id = item.Id + "edit-button"  }) |
-                            @Html.ActionLink("Delete", "Delete", new { id = item.Id + "delete-button" })
+                            @Html.ActionLink("Delete", "DeleteTodoItem", "GroupTodoList", new { id = item.Id + "delete-button", itemId = item.Id })
                         </div>
                     </div>
                 }
