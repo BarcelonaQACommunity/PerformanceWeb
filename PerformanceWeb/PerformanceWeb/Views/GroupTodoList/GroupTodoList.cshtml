@@ -33,23 +33,32 @@
                 <p>
                     @Html.ActionLink("Create New", "NewTodoItem", "NewTodoItem")
                 </p>
-                @foreach (var item in Model.Groups[Model.GroupToShow].TodoList)
+                @if (Model.Groups[Model.GroupToShow].TodoList.Count == 0)
                 {
-                    <div class="well" style="background:@item.Color" id="@item.Id">
-                        <h3 name="title">@item.Title</h3>
-                        <h4 name="description">@item.Description</h4>
-                        <div>
-                            @Html.ActionLink("Edit", "EditTodoItem", "EditTodoItem", new { id = item.Id + "edit -button", todoItemModel = item.Id }) |
-                            @Html.ActionLink("Delete", "DeleteTodoItem", "GroupTodoList", new { id = item.Id + "delete-button", itemId = item.Id })
-                        </div>
+                    <div class="well" style="background:white">
+                        @Html.Label("Welcome to the ERNI Performance Day 2017!")
                     </div>
+                }
+                else
+                {
+                    @foreach (var item in Model.Groups[Model.GroupToShow].TodoList)
+                    {
+                        <div class="well" style="background:@item.Color" id="@item.Id">
+                            <h3 name="title">@item.Title</h3>
+                            <h4 name="description">@item.Description</h4>
+                            <div>
+                                @Html.ActionLink("Edit", "EditTodoItem", "EditTodoItem", new { id = item.Id + "edit -button", todoItemModel = item.Id }) |
+                                @Html.ActionLink("Delete", "DeleteTodoItem", "GroupTodoList", new { id = item.Id + "delete-button", itemId = item.Id })
+                            </div>
+                        </div>
+                    }
                 }
             </td>
         </tr>
     </tbody>
 </table>
-    
-    
 
-    
+
+
+
 
