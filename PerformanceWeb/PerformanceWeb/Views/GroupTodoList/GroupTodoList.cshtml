@@ -14,7 +14,6 @@
                         {
                             <li>
                                 @Html.ActionLink(group.Title, "ShowGroup", "GroupTodoList", new { groupId = group.Id })
-                                @*<a href="#" id="@group.Id">@group.Title</a>*@
                             </li>
                         }
                     </ul>
@@ -32,7 +31,7 @@
             </td>
             <td class="col-lg-10">
                 <p>
-                    <a asp-action="Create">Create New</a>
+                    @Html.ActionLink("Create New", "NewTodoItem", "NewTodoItem")
                 </p>
                 @foreach (var item in Model.Groups[Model.GroupToShow].TodoList)
                 {

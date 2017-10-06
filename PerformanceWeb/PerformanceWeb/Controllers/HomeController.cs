@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using PerformanceWeb.Models;
-using PerformanceWeb.Data;
 
 namespace PerformanceWeb.Controllers
 {
@@ -28,9 +23,7 @@ namespace PerformanceWeb.Controllers
             ViewData["Message"] = "Your contact page.";
 
             return View();
-        }
-
-        
+        }        
 
         public IActionResult Error()
         {

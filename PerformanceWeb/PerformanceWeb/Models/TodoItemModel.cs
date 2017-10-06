@@ -1,4 +1,6 @@
-﻿namespace PerformanceWeb.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace PerformanceWeb.Models
 {
     /// <summary>
     /// THe todo item model class.
@@ -19,6 +21,7 @@
         /// <value>
         /// The title.
         /// </value>
+        [Required]
         public string Title { get; set; }
 
         /// <summary>
@@ -27,6 +30,15 @@
         /// <value>
         /// The description.
         /// </value>
+        [Required]
         public string Description { get; set; }
+
+        /// <summary>
+        /// Gets or sets the color.
+        /// </summary>
+        /// <value>
+        /// The color.
+        /// </value>
+        public string Color { get; set; }
     }
 }

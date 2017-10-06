@@ -27,9 +27,9 @@ namespace PerformanceWeb.Data
                             Title = "Group 1",
                             TodoList = new List<TodoItemModel>
                             {
-                                new TodoItemModel { Id = "item-1", Title = "Title 1", Description = "Description 1"},
-                                new TodoItemModel { Id = "item-2", Title = "Title 2", Description = "Description 2"},
-                                new TodoItemModel { Id= "item-3", Title = "Title 3", Description = "Description 3"}
+                                new TodoItemModel { Id = "item-1", Title = "Title 1", Description = "Description 1", Color = "white"},
+                                new TodoItemModel { Id = "item-2", Title = "Title 2", Description = "Description 2", Color = "white"},
+                                new TodoItemModel { Id= "item-3", Title = "Title 3", Description = "Description 3", Color = "white"}
                             }
                         }
                     }
