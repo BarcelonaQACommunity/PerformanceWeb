@@ -17,6 +17,8 @@ namespace PerformanceWeb.Data
             {
                 TodoData = new GroupTodoListModel
                 {
+                    GroupToShow = 0,
+
                     Groups = new List<GroupTodoModel>
                     {
                         new GroupTodoModel

@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PerformanceWeb.Data;
 using PerformanceWeb.Models;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace PerformanceWeb.Controllers
 {
@@ -10,6 +12,15 @@ namespace PerformanceWeb.Controllers
     /// <seealso cref="Microsoft.AspNetCore.Mvc.Controller" />
     public class GroupTodoListController : Controller
     {
+        /// <summary>
+        /// Groups the todo list.
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult GroupTodoList()
+        {
+            return View(StaticData.TodoData);
+        }
+
         // GET: GroupTodoList
         /// <summary>
         /// Indexes this instance.
@@ -30,16 +41,36 @@ namespace PerformanceWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                StaticData.TodoData.Groups.Add(new GroupTodoModel { Id = $"group-{StaticData.TodoData.Groups.Count + 1}", Title = groupTodoListModel.NewGroup });
+                StaticData.TodoData.Groups.Add(new GroupTodoModel
+                {
+                    Id = $"group-{StaticData.TodoData.Groups.Count + 1}",
+                    Title = groupTodoListModel.NewGroup,
+                    TodoList = new List<TodoItemModel>()
+                });
             }
 
-            //return RedirectToAction("GroupTodoList");
             return View("GroupTodoList", StaticData.TodoData);
         }
 
-        public IActionResult GroupTodoList()
+        /// <summary>
+        /// Shows the group.
+        /// </summary>
+        /// <param name="groupId">The group identifier.</param>
+        /// <returns></returns>
+        public ActionResult ShowGroup(string groupId)
         {
-            return View(StaticData.TodoData);
+            var id = 0;
+            for (int i = 0; i < StaticData.TodoData.Groups.Count; i++)
+            {
+                if (StaticData.TodoData.Groups[i].Id == groupId)
+                {
+                    id = i;
+                }
+            }
+
+            StaticData.TodoData.GroupToShow = id;
+
+            return View("GroupTodoList", StaticData.TodoData);
         }
     }
 }

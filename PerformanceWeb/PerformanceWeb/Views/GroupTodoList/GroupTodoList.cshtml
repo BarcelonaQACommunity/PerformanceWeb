@@ -12,7 +12,10 @@
                     <ul class="nav nav-pills nav-stacked span2">
                         @foreach (var group in Model.Groups)
                         {
-                            <li><a href="#">@group.Title</a></li>
+                            <li>
+                                @Html.ActionLink(group.Title, "ShowGroup", "GroupTodoList", new { groupId = group.Id })
+                                @*<a href="#" id="@group.Id">@group.Title</a>*@
+                            </li>
                         }
                     </ul>
                     <div class="well" style="background:white" align="center">
@@ -31,7 +34,7 @@
                 <p>
                     <a asp-action="Create">Create New</a>
                 </p>
-                @foreach (var item in Model.Groups.First().TodoList)
+                @foreach (var item in Model.Groups[Model.GroupToShow].TodoList)
                 {
                     <div class="well" style="background:white" id="@item.Id">
                         <h3 name="title">@item.Title</h3>
