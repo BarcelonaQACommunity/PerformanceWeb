@@ -30,10 +30,7 @@ namespace PerformanceWeb.Controllers
             return View();
         }
 
-        public IActionResult GroupTodoList()
-        {
-            return View(StaticData.TodoData);
-        }
+        
 
         public IActionResult Error()
         {

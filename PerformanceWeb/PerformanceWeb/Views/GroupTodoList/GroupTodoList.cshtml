@@ -1,0 +1,53 @@
+﻿@model GroupTodoListModel
+
+@{
+    ViewData["Title"] = "ERNI List";
+}
+<h2>ERNI List</h2>
+<table>
+    <tbody>
+        <tr>
+            <td class="col-lg-2">
+                <nav>
+                    <ul class="nav nav-pills nav-stacked span2">
+                        @foreach (var group in Model.Groups)
+                        {
+                            <li><a href="#">@group.Title</a></li>
+                        }
+                    </ul>
+                    <div class="well" style="background:white" align="center">
+                        @using (Html.BeginForm("CreateNewGroup", "GroupTodoList", FormMethod.Post))
+                        {
+                            @Html.TextBoxFor(model => model.NewGroup, new { @class = "input-xlarge", @id = "textBox-addGroup" })
+                            <br />
+                            @Html.ValidationMessageFor(model => model.NewGroup, null, new { @class = "help-inline", @id = "validation-group-message" })
+                            <br />
+                            <button type="submit" id="button-addGroup">New Group</button>
+                        }
+                    </div>
+                </nav>
+            </td>
+            <td class="col-lg-10">
+                <p>
+                    <a asp-action="Create">Create New</a>
+                </p>
+                @foreach (var item in Model.Groups.First().TodoList)
+                {
+                    <div class="well" style="background:white" id="@item.Id">
+                        <h3 name="title">@item.Title</h3>
+                        <h4 name="description">@item.Description</h4>
+                        <div>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.Id + "edit-button"  }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.Id + "delete-button" })
+                        </div>
+                    </div>
+                }
+            </td>
+        </tr>
+    </tbody>
+</table>
+    
+    
+
+    
+
