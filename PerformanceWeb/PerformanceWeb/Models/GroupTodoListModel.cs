@@ -32,5 +32,13 @@ namespace PerformanceWeb.Models
         /// The group to show.
         /// </value>
         public int GroupToShow { get; set; }
+
+        /// <summary>
+        /// Gets or sets the item to show.
+        /// </summary>
+        /// <value>
+        /// The item to show.
+        /// </value>
+        public string ItemToShow { get; set; }
     }
 }
