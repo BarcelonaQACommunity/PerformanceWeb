@@ -15,12 +15,19 @@
             <br />
             <br />
         </div>
-        <div align="center" class="">
+        <div align="center">
             @Html.Label("Description")
             <br />
             @Html.TextAreaFor(model => model.Description, new { @class = "input-xlarge", @id = "textBox-itemDescription", @cols="80", @rows="4" })
             <br />
             @Html.ValidationMessageFor(model => model.Description, null, new { @class = "help-inline", @id = "validation-itemDescription-message" })
+            <br />
+            <br />
+        </div>
+        <div align="center">
+            @Html.Label("Color")
+            <br />
+            @Html.DropDownListFor(model => model.Color, Model.Colors, new { @id = "dropDown-itemColor" })
             <br />
             <br />
         </div>

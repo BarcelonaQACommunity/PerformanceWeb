@@ -1,4 +1,5 @@
-﻿using PerformanceWeb.Models;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using PerformanceWeb.Models;
 using System.Collections.Generic;
 
 namespace PerformanceWeb.Data
@@ -9,7 +10,7 @@ namespace PerformanceWeb.Data
     public class StaticData
     {
         /// <summary>
-        /// Initializes the <see cref="StaticData"/> class.
+        /// Initializes the <see cref="StaticData" /> class.
         /// </summary>
         static StaticData()
         {
@@ -27,9 +28,9 @@ namespace PerformanceWeb.Data
                             Title = "Group 1",
                             TodoList = new List<TodoItemModel>
                             {
-                                new TodoItemModel { Id = "item-1", Title = "Title 1", Description = "Description 1", Color = "white"},
-                                new TodoItemModel { Id = "item-2", Title = "Title 2", Description = "Description 2", Color = "white"},
-                                new TodoItemModel { Id= "item-3", Title = "Title 3", Description = "Description 3", Color = "white"}
+                                new TodoItemModel { Id = "item-1", Title = "Title 1", Description = "Description 1", Color = "white" },
+                                new TodoItemModel { Id = "item-2", Title = "Title 2", Description = "Description 2", Color = "red" },
+                                new TodoItemModel { Id= "item-3", Title = "Title 3", Description = "Description 3", Color = "white" }
                             }
                         }
                     }

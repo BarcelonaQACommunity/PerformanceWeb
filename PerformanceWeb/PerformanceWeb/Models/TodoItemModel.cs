@@ -1,4 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace PerformanceWeb.Models
 {
@@ -7,6 +10,15 @@ namespace PerformanceWeb.Models
     /// </summary>
     public class TodoItemModel
     {
+        public TodoItemModel()
+        {
+            Colors = new List<SelectListItem>
+            {
+                new SelectListItem { Text = "White", Value = "white"},
+                new SelectListItem { Text = "Red", Value = "red"}
+            };
+        }
+
         /// <summary>
         /// Gets or sets the identifier.
         /// </summary>
@@ -40,5 +52,13 @@ namespace PerformanceWeb.Models
         /// The color.
         /// </value>
         public string Color { get; set; }
+
+        /// <summary>
+        /// Gets or sets the colors.
+        /// </summary>
+        /// <value>
+        /// The colors.
+        /// </value>
+        public IEnumerable<SelectListItem> Colors { get; set; }
     }
 }

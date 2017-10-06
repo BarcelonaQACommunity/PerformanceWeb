@@ -35,7 +35,7 @@
                 </p>
                 @foreach (var item in Model.Groups[Model.GroupToShow].TodoList)
                 {
-                    <div class="well" style="background:white" id="@item.Id">
+                    <div class="well" style="background:@item.Color" id="@item.Id">
                         <h3 name="title">@item.Title</h3>
                         <h4 name="description">@item.Description</h4>
                         <div>

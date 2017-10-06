@@ -16,7 +16,7 @@ namespace PerformanceWeb.Controllers
         /// <returns></returns>
         public IActionResult NewTodoItem()
         {
-            return View();
+            return View(new TodoItemModel());
         }
 
         /// <summary>
