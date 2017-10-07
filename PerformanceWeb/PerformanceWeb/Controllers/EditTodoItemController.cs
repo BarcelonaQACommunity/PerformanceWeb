@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PerformanceWeb.Models;
-using PerformanceWeb.Data;
+using Newtonsoft.Json;
+using Microsoft.AspNetCore.Http;
 
 namespace PerformanceWeb.Controllers
 {
@@ -16,12 +17,16 @@ namespace PerformanceWeb.Controllers
         /// <returns></returns>
         public IActionResult EditTodoItem(string todoItemModel)
         {
+            var staticData = JsonConvert.DeserializeObject<GroupTodoListModel>(HttpContext.Session.GetString("User"));
+
             if (!string.IsNullOrEmpty(todoItemModel))
             {
-                StaticData.TodoData.ItemToShow = todoItemModel;
+                staticData.ItemToShow = todoItemModel;
+
+                HttpContext.Session.SetString("User", JsonConvert.SerializeObject(staticData));
             }
             
-            var model = StaticData.TodoData.Groups[StaticData.TodoData.GroupToShow].TodoList.Find(p => p.Id == StaticData.TodoData.ItemToShow);
+            var model = staticData.Groups[staticData.GroupToShow].TodoList.Find(p => p.Id == staticData.ItemToShow);
 
             return View(model);
         }
@@ -36,7 +41,9 @@ namespace PerformanceWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                var item = StaticData.TodoData.Groups[StaticData.TodoData.GroupToShow].TodoList.Find(p => p.Id == StaticData.TodoData.ItemToShow);
+                var staticData = JsonConvert.DeserializeObject<GroupTodoListModel>(HttpContext.Session.GetString("User"));
+
+                var item = staticData.Groups[staticData.GroupToShow].TodoList.Find(p => p.Id == staticData.ItemToShow);
 
                 if (string.IsNullOrEmpty(itemModel.Color))
                 {
@@ -50,7 +57,9 @@ namespace PerformanceWeb.Controllers
                 item.Title = itemModel.Title;
                 item.Description = itemModel.Description;
 
-                return RedirectToAction("GroupTodoList", "GroupTodoList", StaticData.TodoData);
+                HttpContext.Session.SetString("User", JsonConvert.SerializeObject(staticData));
+
+                return RedirectToAction("GroupTodoList", "GroupTodoList", staticData);
             }
             else
             {

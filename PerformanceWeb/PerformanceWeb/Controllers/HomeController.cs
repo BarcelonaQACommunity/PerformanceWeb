@@ -1,6 +1,9 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using PerformanceWeb.Models;
+using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace PerformanceWeb.Controllers
 {
@@ -8,6 +11,28 @@ namespace PerformanceWeb.Controllers
     {
         public IActionResult Index()
         {
+            var value = HttpContext.Session.GetString("User");
+
+            if (value == null)
+            {
+                var data = new GroupTodoListModel
+                {
+                    GroupToShow = 0,
+
+                    Groups = new List<GroupTodoModel>
+                    {
+                        new GroupTodoModel
+                        {
+                            Id = "group-1",
+                            Title = "Group 1",
+                            TodoList = new List<TodoItemModel>()
+                        }
+                    }
+                };
+
+                HttpContext.Session.SetString("User", JsonConvert.SerializeObject(data));
+            }
+            
             return View();
         }
 

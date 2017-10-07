@@ -1,5 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using PerformanceWeb.Data;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using PerformanceWeb.Models;
 
 namespace PerformanceWeb.Controllers
@@ -27,9 +28,11 @@ namespace PerformanceWeb.Controllers
         [HttpPost]
         public ActionResult CreateNewItem(TodoItemModel itemModel)
         {
+            var staticData = JsonConvert.DeserializeObject<GroupTodoListModel>(HttpContext.Session.GetString("User"));
+
             if (ModelState.IsValid)
             {
-                int id = StaticData.TodoData.Groups[StaticData.TodoData.GroupToShow].TodoList.Count + 1;
+                int id = staticData.Groups[staticData.GroupToShow].TodoList.Count + 1;
                 itemModel.Id = "item-" + id;
 
                 if (string.IsNullOrEmpty(itemModel.Color))
@@ -37,9 +40,11 @@ namespace PerformanceWeb.Controllers
                     itemModel.Color = "white";
                 }
 
-                StaticData.TodoData.Groups[StaticData.TodoData.GroupToShow].TodoList.Add(itemModel);
+                staticData.Groups[staticData.GroupToShow].TodoList.Add(itemModel);
 
-                return RedirectToAction("GroupTodoList", "GroupTodoList", StaticData.TodoData);
+                HttpContext.Session.SetString("User", JsonConvert.SerializeObject(staticData));
+
+                return RedirectToAction("GroupTodoList", "GroupTodoList", staticData);
             }
             else
             {

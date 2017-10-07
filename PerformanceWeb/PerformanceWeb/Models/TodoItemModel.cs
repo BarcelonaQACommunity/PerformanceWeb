@@ -10,17 +10,6 @@ namespace PerformanceWeb.Models
     /// </summary>
     public class TodoItemModel
     {
-        public TodoItemModel()
-        {
-            Colors = new List<SelectListItem>
-            {
-                new SelectListItem { Text = "White", Value = "white"},
-                new SelectListItem { Text = "Red", Value = "red"},
-                new SelectListItem { Text = "Aquamarine", Value = "aquamarine"},
-                new SelectListItem { Text = "Burlywood", Value = "burlywood"}
-            };
-        }
-
         /// <summary>
         /// Gets or sets the identifier.
         /// </summary>
@@ -61,6 +50,14 @@ namespace PerformanceWeb.Models
         /// <value>
         /// The colors.
         /// </value>
-        public IEnumerable<SelectListItem> Colors { get; set; }
+        public IEnumerable<SelectListItem> Colors = new List<SelectListItem>
+            {
+                new SelectListItem { Text = "White", Value = "white" },
+                new SelectListItem { Text = "Red", Value = "red" },
+                new SelectListItem { Text = "Aquamarine", Value = "aquamarine" },
+                new SelectListItem { Text = "Burlywood", Value = "burlywood" },
+                new SelectListItem { Text = "Yellow", Value = "yellow" },
+                new SelectListItem { Text = "Blue", Value = "blue" }
+            };
     }
 }

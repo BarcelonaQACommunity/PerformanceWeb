@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using PerformanceWeb.Data;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using PerformanceWeb.Models;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace PerformanceWeb.Controllers
 {
@@ -18,7 +18,30 @@ namespace PerformanceWeb.Controllers
         /// <returns></returns>
         public IActionResult GroupTodoList()
         {
-            return View(StaticData.TodoData);
+            var value = HttpContext.Session.GetString("User");
+
+            if (value == null)
+            {
+                var data = new GroupTodoListModel
+                {
+                    GroupToShow = 0,
+
+                    Groups = new List<GroupTodoModel>
+                    {
+                        new GroupTodoModel
+                        {
+                            Id = "group-1",
+                            Title = "Group 1",
+                            TodoList = new List<TodoItemModel>()
+                        }
+                    }
+                };
+
+                HttpContext.Session.SetString("User", JsonConvert.SerializeObject(data));
+            }
+
+            var staticData = JsonConvert.DeserializeObject<GroupTodoListModel>(HttpContext.Session.GetString("User"));
+            return View(staticData);
         }
 
         // GET: GroupTodoList
@@ -34,22 +57,26 @@ namespace PerformanceWeb.Controllers
         /// <summary>
         /// Creates the new group.
         /// </summary>
-        /// <param name="groupName">Name of the group.</param>
+        /// <param name="groupTodoListModel">The group todo list model.</param>
         /// <returns></returns>
         [HttpPost]
         public ActionResult CreateNewGroup(GroupTodoListModel groupTodoListModel)
         {
+            var staticData = JsonConvert.DeserializeObject<GroupTodoListModel>(HttpContext.Session.GetString("User"));
+
             if (ModelState.IsValid)
             {
-                StaticData.TodoData.Groups.Add(new GroupTodoModel
+                staticData.Groups.Add(new GroupTodoModel
                 {
-                    Id = $"group-{StaticData.TodoData.Groups.Count + 1}",
+                    Id = $"group-{staticData.Groups.Count + 1}",
                     Title = groupTodoListModel.NewGroup,
                     TodoList = new List<TodoItemModel>()
                 });
+
+                HttpContext.Session.SetString("User", JsonConvert.SerializeObject(staticData));
             }
 
-            return View("GroupTodoList", StaticData.TodoData);
+            return View("GroupTodoList", staticData);
         }
 
         /// <summary>
@@ -59,8 +86,10 @@ namespace PerformanceWeb.Controllers
         /// <returns></returns>
         public ActionResult DeleteTodoItem(string itemId)
         {
+            var staticData = JsonConvert.DeserializeObject<GroupTodoListModel>(HttpContext.Session.GetString("User"));
+
             TodoItemModel itemToRemove = null;
-            foreach (var item in StaticData.TodoData.Groups[StaticData.TodoData.GroupToShow].TodoList)
+            foreach (var item in staticData.Groups[staticData.GroupToShow].TodoList)
             {
                 if (item.Id == itemId)
                 {
@@ -70,10 +99,12 @@ namespace PerformanceWeb.Controllers
 
             if (itemToRemove != null)
             {
-                StaticData.TodoData.Groups[StaticData.TodoData.GroupToShow].TodoList.Remove(itemToRemove);
+                staticData.Groups[staticData.GroupToShow].TodoList.Remove(itemToRemove);
             }
 
-            return View("GroupTodoList", StaticData.TodoData);
+            HttpContext.Session.SetString("User", JsonConvert.SerializeObject(staticData));
+
+            return View("GroupTodoList", staticData);
         }
 
         /// <summary>
@@ -83,18 +114,22 @@ namespace PerformanceWeb.Controllers
         /// <returns></returns>
         public ActionResult ShowGroup(string groupId)
         {
+            var staticData = JsonConvert.DeserializeObject<GroupTodoListModel>(HttpContext.Session.GetString("User"));
+
             var id = 0;
-            for (int i = 0; i < StaticData.TodoData.Groups.Count; i++)
+            for (int i = 0; i < staticData.Groups.Count; i++)
             {
-                if (StaticData.TodoData.Groups[i].Id == groupId)
+                if (staticData.Groups[i].Id == groupId)
                 {
                     id = i;
                 }
             }
 
-            StaticData.TodoData.GroupToShow = id;
+            staticData.GroupToShow = id;
 
-            return View("GroupTodoList", StaticData.TodoData);
+            HttpContext.Session.SetString("User", JsonConvert.SerializeObject(staticData));
+
+            return View("GroupTodoList", staticData);
         }
     }
 }
