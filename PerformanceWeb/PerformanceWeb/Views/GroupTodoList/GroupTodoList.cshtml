@@ -1,9 +1,9 @@
 ﻿@model GroupTodoListModel
 
 @{
-    ViewData["Title"] = "ERNI List";
+    ViewData["Title"] = "TODO List";
 }
-<h2>ERNI List</h2>
+<h2>Groups</h2>
 <table>
     <tbody>
         <tr>
@@ -13,16 +13,16 @@
                         @foreach (var group in Model.Groups)
                         {
                             <li>
-                                @Html.ActionLink(group.Title, "ShowGroup", "GroupTodoList", new { groupId = group.Id })
+                                @Html.ActionLink(group.Title, "ShowGroup", "GroupTodoList", new { groupId = group.Id }, new { testId = "group-list-item" })
                             </li>
                         }
                     </ul>
                     <div class="well" style="background:white" align="center">
                         @using (Html.BeginForm("CreateNewGroup", "GroupTodoList", FormMethod.Post))
                         {
-                            @Html.TextBoxFor(model => model.NewGroup, new { @class = "input-xlarge", @id = "textBox-addGroup" })
+                            @Html.TextBoxFor(model => model.NewGroup, new { @class = "input-xlarge", id = "textBox-addGroup" })
                             <br />
-                            @Html.ValidationMessageFor(model => model.NewGroup, null, new { @class = "help-inline", @id = "validation-group-message" })
+                            @Html.ValidationMessageFor(model => model.NewGroup, null, new { @class = "help-inline", id = "validation-group-message" })
                             <br />
                             <button type="submit" id="button-addGroup">New Group</button>
                         }
@@ -31,24 +31,24 @@
             </td>
             <td class="col-lg-10">
                 <p>
-                    @Html.ActionLink("Create New", "NewTodoItem", "NewTodoItem")
+                    @Html.ActionLink("Create New", "NewTodoItem", "NewTodoItem", null, new { name = "create-new"})
                 </p>
                 @if (Model.Groups[Model.GroupToShow].TodoList.Count == 0)
                 {
                     <div>
-                        @Html.Label("Welcome to the ERNI Performance Day 2017!")
+                        @Html.Label("Welcome to the TODO Item List!")
                     </div>
                 }
                 else
                 {
-                    @foreach (var item in Model.Groups[Model.GroupToShow].TodoList)
+                    foreach (var item in Model.Groups[Model.GroupToShow].TodoList)
                     {
-                        <div class="well" style="background:@item.Color" id="@item.Id">
+                        <div class="well" style="background:@item.Color" data-test-id="box-list-item">
                             <h3 name="title">@item.Title</h3>
                             <h4 name="description">@item.Description</h4>
                             <div>
-                                @Html.ActionLink("Edit", "EditTodoItem", "EditTodoItem", new { id = item.Id + "edit -button", todoItemModel = item.Id }) |
-                                @Html.ActionLink("Delete", "DeleteTodoItem", "GroupTodoList", new { id = item.Id + "delete-button", itemId = item.Id })
+                                @Html.ActionLink("Edit", "EditTodoItem", "EditTodoItem", new { id = item.Id + "edit -button", todoItemModel = item.Id }, new {name = "edit-button"}) |
+                                @Html.ActionLink("Delete", "DeleteTodoItem", "GroupTodoList", new { id = item.Id + "delete-button", itemId = item.Id }, new {name = "delete-button"})
                             </div>
                         </div>
                     }
